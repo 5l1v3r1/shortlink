@@ -65,16 +65,20 @@ def robot(message):
 
                 if database.check_lang(message.from_user.id) == "Fa":
                     markup = types.InlineKeyboardMarkup()
+                    change_lang = types.InlineKeyboardButton("تغییر زبان", callback_data="change_lang")
                     a = types.InlineKeyboardButton("Iran Cyber Security Group", url="https://iran-cyber.net")
                     b = types.InlineKeyboardButton("Safe Data Hosting Co", url="https://safe-data.ir")
+                    markup.add(change_lang)
                     markup.add(a)
                     markup.add(b)
                     bot.send_message(message.chat.id, "سلام [{}](tg://user?id={})\nبه ربات کوتاه کننده لینک ایران سایبر خوش آمدید\nلینک خود را برای کوتاه شدن ارسال کنید".format(message.from_user.first_name, message.from_user.id), reply_markup=markup, parse_mode="Markdown")
 
                 else:
                     markup = types.InlineKeyboardMarkup()
+                    change_lang = types.InlineKeyboardButton("change language", callback_data="change_lang")
                     a = types.InlineKeyboardButton("Iran Cyber Security Group", url="https://iran-cyber.net")
                     b = types.InlineKeyboardButton("Safe Data Hosting Co", url="https://safe-data.ir")
+                    markup.add(change_lang)
                     markup.add(a)
                     markup.add(b)
                     bot.send_message(message.chat.id, "Hi [{}](tg://user?id={})\nWelcome to IRan Cyber Shortlink Bot\nEnter Your Link".format(message.from_user.first_name, message.from_user.id), reply_markup=markup, parse_mode="Markdown")
@@ -110,4 +114,12 @@ def callback_inline(call):
         database.new_user(call.from_user.id, "Fa")
         bot.edit_message_text(text="زبان شما فارسی شد", chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=markup)
 
+    if call.data == "change_lang":
+        if database.check_lang(call.from_user.id) == "Fa":
+            bot.edit_message_text(text="زبان شما به انگلیسی تغییر کرد", chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=markup)
+            database.change_to_en(call.from_user.id)
+
+        else:
+            bot.edit_message_text(text="Language Changed to Persian", chat_id=call.message.chat.id, message_od=call.message.message_id, reply_markup=markup)
+            database.change_to_fa(call.from_user.id)
 bot.polling(True)
