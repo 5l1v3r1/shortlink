@@ -91,12 +91,14 @@ def robot(message):
             b = types.InlineKeyboardButton("Safe Data Hosting Co", url="https://safe-data.ir")
             markup.add(a)
             markup.add(b)
-
-            if database.check_lang(message.from_user.id) == "Fa":
-                bot.send_message(message.chat.id, "لینک کوتاه شده ی شما \n{}".format(short_link(message.text)), reply_markup=markup)
-
-            else:
+            if message.from_user.id in config.ADMIN_ID:
                 bot.send_message(message.chat.id, "Shorten Link : \n{}".format(short_link(message.text)), reply_markup=markup)
+            else:
+                if database.check_lang(message.from_user.id) == "Fa":
+                    bot.send_message(message.chat.id, "لینک کوتاه شده ی شما \n{}".format(short_link(message.text)), reply_markup=markup)
+
+                else:
+                    bot.send_message(message.chat.id, "Shorten Link : \n{}".format(short_link(message.text)), reply_markup=markup)
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
