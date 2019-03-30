@@ -103,11 +103,11 @@ def callback_inline(call):
     markup.add(b)
 
     if call.data == "En":
-        database.new_user(call.message.from_user.id, "En")
+        database.new_user(call.from_user.id, "En")
         bot.edit_message_text(text="your language was set to English", chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=markup)
 
     if call.data == "Fa":
-        database.new_user(call.message.from_user.id, "Fa")
+        database.new_user(call.from_user.id, "Fa")
         bot.edit_message_text(text="زبان شما فارسی شد", chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=markup)
 
 bot.polling(True)
