@@ -12,10 +12,10 @@ def check_user(user_id: int):
 
 def new_user(user_id: int, language: str):
     try:
-        db.execute("INSERT INTO robot(user_id, language) VALUES(?,?)", (user_id, language))
+        db.execute("INSERT OR REPLACE INTO robot(user_id, language) VALUES(?,?)", (user_id, language))
         db.commit()
-    except:
-        pass
+    except Exception as e:
+        print(e)
 
 def check_lang(user_id: int):
     check = db.execute("SELECT language FROM robot WHERE user_id = ?", (user_id,))
