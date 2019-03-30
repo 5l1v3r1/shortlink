@@ -22,3 +22,11 @@ def check_lang(user_id: int):
     for checker in check:
         lang = checker[0]
     return lang
+
+def change_to_en(user_id: int):
+    db.execute("UPDATE robot SET language = ? WHERE user_id = ?", ("En", user_id))
+    db.commit()
+
+def change_to_fa(user_id: int):
+    db.execute("UPDATE robot SET language = ? WHERE user_id = ?", ("Fa", user_id))
+    db.commit()
