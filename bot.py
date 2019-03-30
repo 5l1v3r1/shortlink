@@ -120,6 +120,6 @@ def callback_inline(call):
             database.change_to_en(call.from_user.id)
 
         else:
-            bot.edit_message_text(text="Language Changed to Persian", chat_id=call.message.chat.id, message_od=call.message.message_id, reply_markup=markup)
+            bot.edit_message_text(text="Language Changed to Persian", chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=markup)
             database.change_to_fa(call.from_user.id)
 bot.polling(True)
